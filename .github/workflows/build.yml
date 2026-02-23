@@ -1,0 +1,40 @@
+name: Build WASM Plugin
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-wasip1
+      - run: cargo build --target wasm32-wasip1 --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tidal-plugin
+          path: |
+            target/wasm32-wasip1/release/riff_plugin_tidal.wasm
+            manifest.json
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tidal-plugin
+          path: dist/
+      - run: cp dist/target/wasm32-wasip1/release/riff_plugin_tidal.wasm dist/plugin.wasm
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/plugin.wasm
+            dist/manifest.json

@@ -1,0 +1,35 @@
+{
+    "id": "tidal",
+    "name": "Tidal",
+    "version": "0.1.0",
+    "description": "Stream and download from Tidal via community proxies",
+    "author": "riff",
+    "capabilities": ["streaming"],
+    "permissions": {
+        "http": {
+            "reason": "Calls Tidal API via community proxy instances",
+            "required_hosts": [
+                "monochrome.tf",
+                "tidal-api.binimum.org",
+                "*.tidal.com",
+                "resources.tidal.com"
+            ]
+        }
+    },
+    "settings": [
+        {
+            "key": "quality",
+            "label": "Quality",
+            "field_type": "select",
+            "required": false,
+            "help_text": "Default streaming/download quality"
+        },
+        {
+            "key": "instance_timeout",
+            "label": "Instance Timeout (seconds)",
+            "field_type": "string",
+            "required": false,
+            "help_text": "Timeout per proxy instance before failover"
+        }
+    ]
+}
