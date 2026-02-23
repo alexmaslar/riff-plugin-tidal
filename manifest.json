@@ -9,7 +9,7 @@
         "http": {
             "reason": "Calls Tidal API via community proxy instances",
             "required_hosts": [
-                "monochrome.tf",
+                "*.monochrome.tf",
                 "tidal-api.binimum.org",
                 "*.tidal.com",
                 "resources.tidal.com"
