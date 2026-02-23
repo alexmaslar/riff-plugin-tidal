@@ -108,7 +108,7 @@ impl TidalClient {
             match http::request::<()>(&req, None) {
                 Ok(resp) => {
                     let status = resp.status_code();
-                    if status == 403 || status == 429 || status >= 500 {
+                    if status == 401 || status == 403 || status == 429 || status >= 500 {
                         self.set_instance_idx((idx + 1) % count)?;
                         continue;
                     }

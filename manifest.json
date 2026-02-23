@@ -14,7 +14,11 @@
                 "tidal-api.binimum.org",
                 "*.binimum.org",
                 "*.tidal.com",
-                "resources.tidal.com"
+                "resources.tidal.com",
+                "*.samidy.com",
+                "*.squid.wtf",
+                "*.qqdl.site",
+                "*.kinoplus.online"
             ]
         }
     },
