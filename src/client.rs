@@ -112,9 +112,16 @@ impl TidalClient {
                         self.set_instance_idx((idx + 1) % count)?;
                         continue;
                     }
-                    // Success - park index here for next request
+                    // Park index here for next request
                     self.set_instance_idx(idx)?;
-                    return Ok(resp.body());
+                    let body = resp.body();
+                    if status < 200 || status >= 300 {
+                        let text = String::from_utf8_lossy(&body);
+                        return Err(Error::msg(format!(
+                            "tidal API error {status} for {path}: {text}"
+                        )));
+                    }
+                    return Ok(body);
                 }
                 Err(_) => {
                     self.set_instance_idx((idx + 1) % count)?;
